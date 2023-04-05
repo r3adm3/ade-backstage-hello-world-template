@@ -18,10 +18,11 @@ jobs:
       run: | 
         timestamp=$(date +%s)
         echo Display the timestamp: $timestamp
+         echo "::set-env name=timestamp::$timestamp"
 
     - name: Build the Docker image
       run: |
-        echo Display the timestamp: $timestamp
+        echo Display the timestamp2: $timestamp
         docker build . --file Dockerfile --tag daed.duckdns.org:50000/adebackstage:$($timestamp)
 
     - name: Push the Docker image
