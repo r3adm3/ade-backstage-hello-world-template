@@ -19,10 +19,10 @@ jobs:
         timestamp=$(date +%s)
         echo Display the timestamp: $timestamp
 
-    - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag daed.duckdns.org:50000/adebackstage:$timestamp
+      run: |
+        echo Display the timestamp: $timestamp
+        docker build . --file Dockerfile --tag daed.duckdns.org:50000/adebackstage:$($timestamp)
 
-    - uses: actions/checkout@v3
     - name: Push the Docker image
-      run: docker push daed.duckdns.org:50000/adebackstage:$timestamp
+      run: docker push daed.duckdns.org:50000/adebackstage:$($timestamp)
