@@ -14,9 +14,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Set outputs
+      id: vars
+      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      
+    - name: Check outputs
+      run: echo ${{ steps.vars.outputs.sha_short }}
+    
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag daed.duckdns.org:50000/adebackstage:${{ github.GITHUB_SHA }}
+        docker build . --file Dockerfile --tag daed.duckdns.org:50000/adebackstage:${{ steps.vars.outputs.sha_short }}
 
     - name: Push the Docker image
-      run: docker push daed.duckdns.org:50000/adebackstage:${{ github.GITHUB_SHA }}
+      run: docker push daed.duckdns.org:50000/adebackstage:${{ steps.vars.outputs.sha_short }}
