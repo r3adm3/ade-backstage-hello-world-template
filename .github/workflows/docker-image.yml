@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: version stamp
+      run: export timestamp=$(date +%s)
+
+
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag daed.duckdns.org:50000/adebackstage:$timestamp
+
+    - uses: actions/checkout@v3
+    - name: Push the Docker image
+      run: docker push daed.duckdns.org:50000/adebackstage:$timestamp
