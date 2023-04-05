@@ -15,13 +15,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: version stamp
-      run: export timestamp=$(date +%s)
-
+      run: | 
+        timestamp=$(date +%s)
+        echo Display the timestamp: $timestamp
 
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag daed.duckdns.org:50000/adebackstage:$(echo $timestamp)
+      run: docker build . --file Dockerfile --tag daed.duckdns.org:50000/adebackstage:$timestamp
 
     - uses: actions/checkout@v3
     - name: Push the Docker image
-      run: docker push daed.duckdns.org:50000/adebackstage:$(echo $timestamp)
+      run: docker push daed.duckdns.org:50000/adebackstage:$timestamp
